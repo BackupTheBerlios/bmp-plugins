@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.2 2004/12/05 06:21:57 bogorodskiy Exp $
+# $Id: Makefile,v 1.3 2004/12/06 14:29:46 bogorodskiy Exp $
 
 CC = cc
 LD = cc
@@ -34,7 +34,7 @@ bmp-htmlplaylist.o: bmp-htmlplaylist.c
 	$(CC) $(CFLAGS) -c $*.c
 
 clean:
-	$(RM) $(PROJ) $(OBJS) *.core *.html
+	$(RM) $(PROJ) $(OBJS) *.core *.html *.xml
 
 install: $(PROJ)
 	$(INSTALL) bmp-htmlplaylist $(PREFIX)/bin/
