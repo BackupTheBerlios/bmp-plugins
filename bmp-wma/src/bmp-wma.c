@@ -118,7 +118,7 @@ static void wma_about(void)
     	char *message = (char *)g_malloc(256);
 
     	if (about_dialog) 
-		return;
+		goto fail;
 
 	(void)g_snprintf(title, 80, "About %s", NAME);
 	(void)g_snprintf(message, 256, "%s %s\n\n%s", NAME, VERSION, ABOUT_TXT);
@@ -148,6 +148,7 @@ static void wma_about(void)
     	gtk_widget_show(about_dialog);
     	gtk_widget_grab_focus(close_button);
 
+fail:
 	g_free(title);
     	g_free(message);
 }
@@ -255,7 +256,7 @@ static gchar *get_song_title(AVFormatContext *in, gchar * filename)
 
     	XMMS_NEW_TITLEINPUT(input);
     
-    	if((in->title[0] != '\0') || (in->author[0] != '\0') || (in->album[0] != '\0') ||
+    	if ((in->title[0] != '\0') || (in->author[0] != '\0') || (in->album[0] != '\0') ||
        		(in->comment[0] != '\0') || (in->genre[0] != '\0') || (in->year != 0) || (in->track != 0))
     	{	
 		input->performer = w_getstr(in->author);
@@ -317,7 +318,7 @@ static void wma_playbuff(int out_size)
     	fifo_init(&f, out_size*2);
     	fifo_write(&f, wma_outbuf, out_size, &f.wptr);
     
-	while(!fifo_read(&f, wma_s_outbuf, wma_st_buff, &f.rptr) && wma_decode) {
+	while (!fifo_read(&f, wma_s_outbuf, wma_st_buff, &f.rptr) && wma_decode) {
         	if (wma_eq_on)
             		sst_buff = iir((gpointer)&wma_s_outbuf, wma_st_buff);
         	else
@@ -457,7 +458,7 @@ static void wma_stop(void)
 {
 	wma_decode = 0;
     	
-	if(wma_pause)
+	if (wma_pause)
 		wma_do_pause(0);
     	
 	pthread_join(wma_decode_thread, NULL);
@@ -529,7 +530,7 @@ static void wma_file_info_box (char *filename)
 		return;
 	}
 
-	if(av_open_input_file(&in, filename, NULL, 0, NULL) < 0) 
+	if (av_open_input_file(&in, filename, NULL, 0, NULL) < 0) 
 		return;
 
     	for(i = 0; i < in->nb_streams; i++) {
