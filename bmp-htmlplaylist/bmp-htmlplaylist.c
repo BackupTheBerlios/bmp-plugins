@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 Roman Bogorodskiy (bogorodskiy@inbox.ru)
+ * Copyright (c) 2004, 2005 Roman Bogorodskiy (bogorodskiy@inbox.ru)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $Id: bmp-htmlplaylist.c,v 1.4 2004/12/19 14:18:25 bogorodskiy Exp $
+ * $Id: bmp-htmlplaylist.c,v 1.5 2005/01/03 10:38:20 bogorodskiy Exp $
  */
 
 #include <stdio.h>
@@ -168,8 +168,10 @@ int main(int argc, char **argv)
 		
 	length = xmms_remote_get_playlist_length(session);
 	
-	if (length == 0)
-		return 0;
+	if (length == 0) {
+		printf("Session %d: BMP is not running or playlist is empty\n");
+		return 1;
+	}
 
 	html_header();
 	
