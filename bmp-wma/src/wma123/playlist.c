@@ -11,7 +11,7 @@
  *                                                                  *
  ********************************************************************
 
- last mod: $Id: playlist.c,v 1.1 2004/12/19 12:50:37 bogorodskiy Exp $
+ last mod: $Id: playlist.c,v 1.2 2005/01/04 13:45:04 bogorodskiy Exp $
 
  ********************************************************************/
 
@@ -138,9 +138,9 @@ int playlist_append_directory(playlist_t *list, char *dirname)
 	&& strcmp(entry->d_name, "..") != 0  ) {
 
       /* Build the new full pathname */
-      strcpy(nextfile, dirname);
-      strcat(nextfile, "/");
-      strcat(nextfile, entry->d_name);
+      strncpy(nextfile, dirname, NAME_MAX);
+      strncat(nextfile, "/", (sizeof(nextfile) - strlen(nextfile) - 1));
+      strncat(nextfile, entry->d_name, (sizeof(nextfile) - strlen(nextfile) - 1));
       
       if (stat(nextfile, &stat_buf) == 0) {
 	
