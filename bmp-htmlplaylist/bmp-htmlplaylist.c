@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $Id: bmp-htmlplaylist.c,v 1.6 2005/01/03 10:40:43 bogorodskiy Exp $
+ * $Id: bmp-htmlplaylist.c,v 1.7 2005/01/03 10:53:21 bogorodskiy Exp $
  */
 
 #include <stdio.h>

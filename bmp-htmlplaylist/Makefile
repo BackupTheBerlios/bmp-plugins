@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.4 2004/12/19 14:18:25 bogorodskiy Exp $
+# $Id: Makefile,v 1.5 2005/01/03 10:53:21 bogorodskiy Exp $
 
 CC = cc
 LD = cc
