@@ -20,3 +20,6 @@ missing
 mkinstalldirs
 stamp-h1
 tags
+compile
+config.rpath
+install-sh
