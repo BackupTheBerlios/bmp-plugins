@@ -1,12 +1,12 @@
+/*
+ * $Id: bmp-htmlplaylist.c,v 1.2 2004/12/05 06:19:53 bogorodskiy Exp $
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 #include <bmp/beepctrl.h>
-
-#define FMT_PLAIN 0
-#define FMT_HTML 1
-#define FMT_XML 2
 
 static void html_header(void);
 static char *format_time(int time);
