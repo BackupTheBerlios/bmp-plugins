@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $Id: bmp-htmlplaylist.c,v 1.7 2005/01/03 10:53:21 bogorodskiy Exp $
+ * $Id: bmp-htmlplaylist.c,v 1.8 2005/01/03 10:55:34 bogorodskiy Exp $
  */
 
 #include <stdio.h>
@@ -122,6 +122,7 @@ static char *format_time(int time)
 	else
 		(void)snprintf(string, 255, "%d days %d hours %d minutes %d seconds", 
 			       days, hours, minutes, seconds);
+
 	return string;
 }
 
