@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $Id: bmp-htmlplaylist.c,v 1.5 2005/01/03 10:38:20 bogorodskiy Exp $
+ * $Id: bmp-htmlplaylist.c,v 1.6 2005/01/03 10:40:43 bogorodskiy Exp $
  */
 
 #include <stdio.h>
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
 	length = xmms_remote_get_playlist_length(session);
 	
 	if (length == 0) {
-		printf("Session %d: BMP is not running or playlist is empty\n");
+		printf("Session %d: BMP is not running or playlist is empty\n", session);
 		return 1;
 	}
 
