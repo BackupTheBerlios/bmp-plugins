@@ -1,3 +1,5 @@
+# $Id: Makefile,v 1.2 2004/12/05 06:21:57 bogorodskiy Exp $
+
 CC = cc
 LD = cc
 PREFIX = /usr/local
