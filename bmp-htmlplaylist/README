@@ -1,0 +1,11 @@
+bmp-htmlplaylist
+
+bmp-htmlplaylist is a simple application which saves your
+current beep-media-player playlist to html file. I've
+thought about xml output, including css styles etc, but
+really I'm not sure about it now. If you have some ideas, 
+simply mail me: bogorodskiy@inbox.ru
+
+Usage:
+
+$ bmp-htmlplaylist > playlist.html
