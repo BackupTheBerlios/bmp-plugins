@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $Id: bmp-htmlplaylist.c,v 1.3 2004/12/06 14:29:46 bogorodskiy Exp $
+ * $Id: bmp-htmlplaylist.c,v 1.4 2004/12/19 14:18:25 bogorodskiy Exp $
  */
 
 #include <stdio.h>
@@ -29,12 +29,45 @@
 
 #include <bmp/beepctrl.h>
 
+#define HOMEPAGE "http://bmp-plugins.berlios.de/misc/bmp-htmlplaylist/"
+
 short int xml_output;
 static void html_header(void);
 static char *format_time(int time);
+static void version(void);
+static void usage(void);
+static void help(void);
+
+static void version()
+{
+	
+	(void)printf("bmp-htmlplaylist %s (c) 2004 Roman Bogorodskiy\n%s\n\n", 
+		     VERSION, COMPILEINFO);
+	exit(0);
+}
+
+static void usage()
+{
+	
+	(void)printf("usage: [-ax] [-s session]\n");
+	exit(1);
+}
+
+static void help()
+{
+ 
+	(void)printf("bmp-htmlplaylist %s (c) 2004 Roman Bogorodskiy\n\n", VERSION);
+	(void)printf("arguments:\n");
+	(void)printf(" -a\tdon't show banner\n");
+	(void)printf(" -s\tselect bmp session (default: 0)\n");
+	(void)printf(" -x\tgenerate xml output\n");
+	(void)printf(" -v\tshow version and exit\n\n");
+	exit(0);
+}
 
 static void html_header()
 {
+	
 	if (!xml_output) {
 		(void)printf("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n");
 		(void)printf("<html>\n\t<head>\n");
@@ -98,20 +131,41 @@ int main(int argc, char **argv)
 	    i,
 	    session,
 	    time;
+	int ch;
+	int show_banner;
 	time_t time_total;
 	char *song;
 		
 	time_total = 0;	
-	/* XXX should ask user about that */
 	session = 0;
-
-	if (argc > 1) {
-		if (strcmp(argv[1], "-x") == 0) 
-			xml_output = 1;
-		else
-			xml_output = 0;
-	}
+	show_banner = 1;
+	xml_output = 0;
 	
+	while ((ch = getopt(argc, argv, "ahs:vx")) != -1) {
+		switch (ch) {
+			case 'a':
+				show_banner = 0;
+				break;
+			case 'h':
+				(void)help();
+				break;
+			case 's':
+				session = atoi(optarg);
+				break;
+			case 'v':
+				(void)version();
+				break;
+			case 'x':
+				xml_output = 1;
+				break;
+			default:
+				(void)usage();	
+		}
+	}
+
+     	argc -= optind;
+	argv += optind;
+		
 	length = xmms_remote_get_playlist_length(session);
 	
 	if (length == 0)
@@ -139,8 +193,14 @@ int main(int argc, char **argv)
 
 	if (!xml_output) {
 		(void)printf("\n\t<hr size=1 width=100%%><br />\n");
-		(void)printf("\n\t<b>Total:</b><br />\n\tTracks: <b>%d</b><br />\n", length);
+		(void)printf("\n\t<b>Total:</b><br />\n\tTracks: <b>%d</b> (mean track length: %s)<br />\n", 
+			     length, format_time((int)(time_total/length)));
 		(void)printf("\tTime: %s<br />\n", format_time(time_total));
+
+		if (show_banner) {
+			(void)printf("\t<br />\n\tCreated with \
+<a href=\"%s\">bmp-htmlplaylist %s</a>\n", HOMEPAGE, VERSION);
+		}
 		(void)printf("\n\t</body>\n</html>\n\n");
 	} else {
 		(void)printf("</playlist>\n");

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.3 2004/12/06 14:29:46 bogorodskiy Exp $
+# $Id: Makefile,v 1.4 2004/12/19 14:18:25 bogorodskiy Exp $
 
 CC = cc
 LD = cc
@@ -7,12 +7,13 @@ INSTALL = install -c -m 755
 # You migth want to change it for your system
 THREAD_LIB = -pthread
 
-VERSION = 0.1
+VERSION = "0.2"
+COMPILEINFO = "Build on `hostname` at `date +\"%Y-%m-%d\"`"
 
 BMP_CFLAGS = `pkg-config --cflags bmp`
 BMP_LIBS = `pkg-config --libs bmp`
 
-CFLAGS += -Wall -g $(BMP_CFLAGS) -DVERSION=$(VERSION)
+CFLAGS += -Wall -g $(BMP_CFLAGS) -DVERSION=\"$(VERSION)\" -DCOMPILEINFO=\"$(COMPILEINFO)\"
 LDFLAGS = -s
 LIBS = $(BMP_LIBS) $(THREAD_LIB)
 
