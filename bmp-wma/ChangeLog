@@ -1,0 +1,18 @@
+--- bmp-wma version 0.1.2 (not released yet)
+	- use VFS from libbmp for file operations
+	- switch from printf() to g_printf() and so on
+	- Fix some compiler warnings, make code cleaner
+
+--- bmp-wma version 0.1.1
+	- patch by Chong Kai Xiong <descender%phreaker.net> 
+	  to build with BMP 0.9.7rc.
+	- wma123 patch by Tony Vroon <chainsaw%gentoo.org> which makes
+	  gcc34 happy. 
+	- add the bootstrap script
+
+--- bmp-wma version 0.1.0
+	- xmms -> bmp porting
+	- GNU autotools	integration
+	- File info dialog rewritten
+	- Many wma decoder fixes and plugin fixes
+	- Some wma123 cleanup's and tweaks

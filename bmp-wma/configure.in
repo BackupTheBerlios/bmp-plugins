@@ -1,0 +1,115 @@
+AC_PREREQ(2.59)
+AC_INIT(bmp-wma, 0.1.2, bogorodskiy@inbox.ru)
+AM_INIT_AUTOMAKE(bmp-wma, 0.1.2)
+AC_CONFIG_SRCDIR([src/])
+AC_CONFIG_HEADER([config.h])
+
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_RANLIB
+AC_PROG_LIBTOOL
+
+test x$prefix = "xNONE" && prefix="$ac_default_prefix"
+
+# Checks for libraries.
+PKG_CHECK_MODULES(BEEP, [bmp >= 0.9.7], 
+    [],
+    [AC_MSG_ERROR([BMP >= 0.9.7 development package not installed])]
+)
+
+BEEP_INPUT_PLUGIN_DIR=`$PKG_CONFIG --variable=input_plugin_dir bmp`
+AC_SUBST(BEEP_INPUT_PLUGIN_DIR)
+
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.4.0],
+    [],
+    [AC_MSG_ERROR([GTK+2 >= 2.4.0 development package not installed])]
+)
+
+# Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([OS.h fcntl.h float.h inttypes.h stddef.h stdlib.h string.h sys/ioctl.h sys/time.h sys/timeb.h unistd.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_C_RESTRICT
+AC_TYPE_SIZE_T
+AC_HEADER_TIME
+AC_STRUCT_TM
+AC_HEADER_STDBOOL
+
+# Checks for library functions.
+AC_FUNC_MALLOC
+AC_FUNC_MEMCMP
+AC_FUNC_MKTIME
+AC_FUNC_REALLOC
+AC_FUNC_STRTOD
+AC_FUNC_VPRINTF
+AC_CHECK_FUNCS([bzero floor gettimeofday localtime_r memmove \
+		memset pow rint sqrt strcasecmp strchr strrchr \ 
+		strstr strtol strtoul lrintf localtime_r])
+
+AC_MSG_CHECKING([whether to include x86 specific optimization code])
+AC_ARG_ENABLE(x86,
+	      [ --enable-x86	include x86 specific optimization code [default=no]],
+	      if test x$enableval = "xyes"; then
+		      AC_MSG_RESULT([yes])
+		      AC_DEFINE(ARCH_X86, 1, "include x86 specific optimization code")
+	      else
+	      	      AC_MSG_RESULT([no])
+	      fi,
+
+	      AC_MSG_RESULT([no])
+)
+
+DEBUG=""
+AC_MSG_CHECKING([whether to include verbose debugging code])
+AC_ARG_ENABLE(debug,
+	      [  --enable-debug	include verbose debugging code [default=no]],
+	      if test x$enableval = "xyes"; then
+		      AC_MSG_RESULT([yes])
+		      DEBUG="-DDEBUG -g -Wall"
+	      else
+		      AC_MSG_RESULT([no])
+	      fi,
+		
+	      AC_MSG_RESULT([no])
+)
+
+AC_SUBST(DEBUG)
+CFLAGS="$CFLAGS $DEBUG"
+
+AC_MSG_CHECKING([whether to include wma123])
+AC_ARG_ENABLE(
+	wma123, [  --enable-wma123	build wma123 [default=no]],
+	if test x$enableval = "xyes"; then
+		AC_MSG_RESULT([yes])   
+		AC_DEFINE(WMA123, 1, " build wma123")
+		WMA123_SRC=true
+	else  
+	   	AC_MSG_RESULT([no])
+		WMA123_SRC=false
+	fi,           
+		AC_MSG_RESULT([no])
+		AC_DEFINE(WMA123, 0, " build wma123")
+		WMA123_SRC=false
+) 
+AM_CONDITIONAL(WMA123_SRC, test x$WMA123_SRC = xtrue)
+
+AC_CONFIG_FILES([Makefile
+		 src/Makefile
+		 src/libffwma/Makefile
+		 src/wma123/Makefile])
+
+AC_MSG_RESULT([])
+AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
+AC_MSG_RESULT([])
+AC_MSG_RESULT([Using '$prefix' for installation.])
+AC_MSG_RESULT([Using '$CC' for C compiler.])
+AC_MSG_RESULT([Building with '$CFLAGS' for C compiler flags.])
+AC_MSG_RESULT([Building with '$LIBS' for linker flags.])
+AC_MSG_RESULT([])
+
+AC_OUTPUT

@@ -1,0 +1,7 @@
+bmp-wma is based on xmms-wma  but lots of things were changed. 
+Well, what has been done:
+	- xmms -> bmp porting
+	- GNU autotools	integration
+	- File info dialog rewritten
+	- Many wma decoder fixes and plugin fixes
+	- Some wma123 cleanup's and tweaks

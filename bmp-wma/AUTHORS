@@ -1,0 +1,32 @@
+bmp-wma author: Roman Bogorodskiy <bogorodskiy@inbox.ru>
+xmms-wma author: Mokrushin I.V <mcmcc@mail.ru>
+
+People who sent patches for bmp-wma:
+Chong Kai Xiong <descender@phreaker.net>
+Tony Vroon <chainsaw@gentoo.org>
+
+Both plugins use ffmpeg based code to decode WMA. 
+Both plugins use some ogg123 code.
+
+ffmpeg authors:
+Fabrice Bellard
+Mario Brito
+Alex Beregszaszi
+Tim Ferguson
+Brian Foley
+Arpad Gereoffy
+Philip Gladstone
+Falk Hueffner
+Zdenek Kabelac
+Nick Kurshev
+Mike Melanson
+Michael Niedermayer
+François Revol
+Dieter Shirley
+Juan J. Sierralta
+Lionel Ulmer
+
+ogg123 authors:
+Kenneth Arnold <ogg123@arnoldnet.net>
+Stan Seibert <volsung@xiph.org>
+Segher Boessenkool <segher@xiph.org> 
