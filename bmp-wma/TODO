@@ -1,2 +1,3 @@
 - fix memory leaks in bmp-wma.c
 - fix some strange problem with threads on some linux systems
+- interface improvements

@@ -211,17 +211,15 @@ static void wma_set_eq(int q_on, float q_preamp, float *q_bands)
 
     	wma_eq_on = q_on;
     
-	if(wma_eq_on)
-    	{
+	if (wma_eq_on) {
 		q_preamp = q_preamp/1.6;
-        	for(chn = 0; chn < c->channels; chn++)
+        	for (chn = 0; chn < c->channels; chn++)
             		preamp[chn] = 1.0 + 0.0932471 * q_preamp + 0.00279033 * q_preamp * q_preamp;
         
-		for(index = 0; index < 10; index++)
-        	{
+		for (index = 0; index < 10; index++) {
             		value = q_bands[index]/1.2;
             	
-			for(chn = 0; chn < c->channels; chn++)
+			for (chn = 0; chn < c->channels; chn++)
                 		gain[index][chn] = 0.03 * value + 0.000999999 * value * value;
         	}
     	}
