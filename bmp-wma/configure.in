@@ -11,8 +11,6 @@ AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_LIBTOOL
 
-test x$prefix = "xNONE" && prefix="$ac_default_prefix"
-
 # Checks for libraries.
 PKG_CHECK_MODULES(BEEP, [bmp >= 0.9.7], 
     [],
@@ -106,10 +104,7 @@ AC_CONFIG_FILES([Makefile
 AC_MSG_RESULT([])
 AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
 AC_MSG_RESULT([])
-AC_MSG_RESULT([Using '$prefix' for installation.])
-AC_MSG_RESULT([Using '$CC' for C compiler.])
-AC_MSG_RESULT([Building with '$CFLAGS' for C compiler flags.])
-AC_MSG_RESULT([Building with '$LIBS' for linker flags.])
+AC_MSG_RESULT([Using '$BEEP_INPUT_PLUGIN_DIR' for installation.])
 AC_MSG_RESULT([])
 
 AC_OUTPUT
