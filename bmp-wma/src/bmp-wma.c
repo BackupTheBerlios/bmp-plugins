@@ -14,6 +14,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *
+ * $Id: bmp-wma.c,v 1.4 2005/01/22 05:42:36 bogorodskiy Exp $
+ * 
  */
 
 #ifdef HAVE_MALLOC_H
@@ -31,7 +34,7 @@
 #include <bmp/vfs.h>
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#	include "config.h"
 #endif
 
 #include "avcodec.h"
@@ -111,46 +114,25 @@ InputPlugin *get_iplugin_info(void)
 
 static void wma_about(void) 
 {
-	GtkWidget *close_button;
-	GtkWidget *label;
-	
-	char *title = (char *)g_malloc(80);
-    	char *message = (char *)g_malloc(256);
-
-    	if (about_dialog) 
-		goto fail;
-
-	(void)g_snprintf(title, 80, "About %s", NAME);
-	(void)g_snprintf(message, 256, "%s %s\n\n%s", NAME, VERSION, ABOUT_TXT);
-	
-    	about_dialog = gtk_dialog_new();
+	static GtkWidget *aboutbox;
+	gchar *text;
     
+	if (aboutbox)
+ 		return;
 	
-	gtk_signal_connect(GTK_OBJECT(about_dialog), "destroy",
-                        GTK_SIGNAL_FUNC(gtk_widget_destroyed), &about_dialog);
-    
-	gtk_window_set_title(GTK_WINDOW(about_dialog), title);
-    	gtk_window_set_policy(GTK_WINDOW(about_dialog), FALSE, FALSE, FALSE);
-    	gtk_container_border_width(GTK_CONTAINER(about_dialog), 5);
-    	label = gtk_label_new(message);
-    	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(about_dialog)->vbox), label, TRUE, TRUE, 0);
-    	gtk_widget_show(label);
+	text = g_strdup_printf("BMP-WMA Plugin %s\n\n"
+        		"Created by Roman Bogorodskiy <bogorodskiy@inbox.ru>\n"
+		       	"Based on xmms-wma written by Mokrushin I.V. aka McMCC <mcmcc@mail.ru>\n"
+			"See AUTHORS for details\n",
+                        VERSION);
 
-    	close_button = gtk_button_new_with_label(" Close ");
-    
-	gtk_signal_connect_object(GTK_OBJECT(close_button), "clicked",
-	                        GTK_SIGNAL_FUNC(gtk_widget_destroy),
-    	                        GTK_OBJECT(about_dialog));
-    	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(about_dialog)->action_area), close_button,
-                     		FALSE, FALSE, 0);
-
-    	gtk_widget_show(close_button);
-    	gtk_widget_show(about_dialog);
-    	gtk_widget_grab_focus(close_button);
-
-fail:
-	g_free(title);
-    	g_free(message);
+	aboutbox = xmms_show_message("About BMP-WMA",
+                             	text,
+                             	"OK", FALSE, NULL, NULL);
+             
+	g_free(text);
+	gtk_signal_connect(GTK_OBJECT(aboutbox), "destroy",
+                           GTK_SIGNAL_FUNC(gtk_widget_destroyed), &aboutbox);
 }
 
 static void wma_init(void)
