@@ -1,1 +1,4 @@
-
+01.02.2005 Roman Bogorodskit <bogorodskiy@gmail.com>
+	* feature: add the "?" button to configure dialog which
+		shows list of format codes
+	* feature: add the about dialog
