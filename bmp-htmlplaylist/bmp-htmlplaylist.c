@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $Id: bmp-htmlplaylist.c,v 1.9 2005/01/05 07:44:39 bogorodskiy Exp $
+ * $Id: bmp-htmlplaylist.c,v 1.10 2005/03/02 19:23:39 bogorodskiy Exp $
  */
 
 #include <stdio.h>
@@ -34,6 +34,7 @@
 short int xml_output;
 static void html_header(void);
 static char *format_time(int time);
+static void show_current_song(int session);
 static void version(void);
 static void usage(void);
 static void help(void);
@@ -49,7 +50,7 @@ static void version()
 static void usage()
 {
 	
-	(void)printf("usage: [-ax] [-s session]\n");
+	(void)printf("usage: [-ax] [ -c ] [-s session]\n");
 	exit(1);
 }
 
@@ -59,6 +60,8 @@ static void help()
 	(void)printf("bmp-htmlplaylist %s (c) 2004 Roman Bogorodskiy\n\n", VERSION);
 	(void)printf("arguments:\n");
 	(void)printf(" -a\tdon't show banner\n");
+	(void)printf(" -c\tshow current song and exit\n");
+	(void)printf(" -h\tshow this message\n");
 	(void)printf(" -s\tselect bmp session (default: 0)\n");
 	(void)printf(" -x\tgenerate xml output\n");
 	(void)printf(" -v\tshow version and exit\n\n");
@@ -126,6 +129,21 @@ static char *format_time(int time)
 	return string;
 }
 
+static void show_current_song(int session)
+{
+	int pos;
+	char *title;
+
+	pos = xmms_remote_get_playlist_pos(session);
+	if (!(title = xmms_remote_get_playlist_title(session, pos))) {
+		(void)fprintf(stderr, "Error: BMP doesn't seem to be running\n");
+		exit(1);
+	} else
+		(void)printf("%s\n", title);
+			
+	exit(0);	
+}
+
 int main(int argc, char **argv) 
 {
 	int length,
@@ -142,10 +160,13 @@ int main(int argc, char **argv)
 	show_banner = 1;
 	xml_output = 0;
 	
-	while ((ch = getopt(argc, argv, "ahs:vx")) != -1) {
+	while ((ch = getopt(argc, argv, "achs:vx")) != -1) {
 		switch (ch) {
 			case 'a':
 				show_banner = 0;
+				break;
+			case 'c':
+				show_current_song(session);
 				break;
 			case 'h':
 				(void)help();
@@ -170,7 +191,7 @@ int main(int argc, char **argv)
 	length = xmms_remote_get_playlist_length(session);
 	
 	if (length == 0) {
-		printf("Session %d: BMP is not running or playlist is empty\n", session);
+		(void)fprintf(stderr, "Session %d: BMP is not running or playlist is empty\n", session);
 		return 1;
 	}
 
@@ -178,7 +199,6 @@ int main(int argc, char **argv)
 	
 	for (i = 0; i < length; i++) {
 		song = xmms_remote_get_playlist_title(session, i);
-		
 		
 		if (!song)
 			return 0;
