@@ -1,4 +1,8 @@
---- bmp-wma version 0.1.2 (not released yet)
+--- bmp-wma version 0.1.3 (not released yet)
+	- Rise MAX_CODED_SUPERFRAME_SIZE for files with high bitrate (merged
+	from xmms-wma)
+
+--- bmp-wma version 0.1.2
 	- use VFS from libbmp for file operations
 	- switch from printf() to g_printf() and so on
 	- Fix some compiler warnings, make code cleaner
