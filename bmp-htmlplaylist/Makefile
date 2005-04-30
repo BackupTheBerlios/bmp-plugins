@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.5 2005/01/03 10:53:21 bogorodskiy Exp $
+# $Id: Makefile,v 1.6 2005/04/30 17:37:05 bogorodskiy Exp $
 
 CC = cc
 LD = cc
@@ -7,7 +7,7 @@ INSTALL = install -c -m 755
 # You migth want to change it for your system
 THREAD_LIB = -pthread
 
-VERSION = "0.2"
+VERSION = "0.2.1"
 COMPILEINFO = "Build on `hostname` at `date +\"%Y-%m-%d\"`"
 
 BMP_CFLAGS = `pkg-config --cflags bmp`
@@ -44,5 +44,4 @@ deinstall:
 	$(RM) $(PREFIX)/bin/bmp-htmlplaylist
 	
 dist:
-	cd .. && tar zcf $(PROJ)-$(VERSION).tar.bz2 $(PROJ) && \
-	md5 $(PROJ)-$(VERSION).tar.bz2 > $(PROJ)-$(VERSION).tar.bz2.sum
+	cd .. && tar jcf $(PROJ)-$(VERSION).tar.bz2 $(PROJ)
