@@ -24,7 +24,7 @@ bmp-htmlplaylist does not filter html/xml special chars
 contacts:
 -------------------
 
-authors' e-mail: bogorodskiy [at] inbox [dot] ru
+e-mail: novel@FreeBSD.org
 maillist: https://lists.berlios.de/mailman/listinfo/bmp-plugins-users
 
-$Id: README,v 1.4 2005/01/03 10:53:21 bogorodskiy Exp $
+$Id: README,v 1.5 2005/04/30 18:41:18 bogorodskiy Exp $
