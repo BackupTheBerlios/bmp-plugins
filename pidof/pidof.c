@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: pidof.c,v 1.2 2005/04/30 16:48:44 bogorodskiy Exp $
+ * $Id: pidof.c,v 1.3 2005/05/01 11:11:46 bogorodskiy Exp $
  */
 
 #include <stdio.h>
@@ -35,34 +35,41 @@
 #include <sys/user.h>
 #include <fcntl.h>
 
-static void get_pid_of_process(char *process_name);
+static int	get_pid_of_process(char *process_name);
 
-static void
+static int
 get_pid_of_process(char *process_name)
 {
 	static kvm_t *kd = NULL;
 	struct kinfo_proc *p;
-	int n_processes;
-	int i;
+	int i, n_processes, processes_found;
 
 	if ((kd = kvm_open("/dev/null", "/dev/null", "/dev/null", O_RDONLY, "kvm_open")) == NULL) 
 			 (void)errx(1, "%s", kvm_geterr(kd));
 	else {
 		p = kvm_getprocs(kd, KERN_PROC_PROC, 0, &n_processes);
 		for (i = 0; i<n_processes; i++)
-			if (strncmp(process_name, p[i].ki_comm, COMMLEN+1) == 0)
+			if (strncmp(process_name, p[i].ki_comm, COMMLEN+1) == 0) {
 				(void)printf("%d ", (int)p[i].ki_pid);
+				processes_found++;
+			}
+
+		kvm_close(kd);
 	}	
+
+	return processes_found;
 }
 
 int
 main(int argc, char **argv)
 {
-	int i;
+	int i, procs_found;
+
+	procs_found = 0;
 	
-	for (i = 1; i<argc; get_pid_of_process(argv[i++]));
+	for (i = 1; i<argc; procs_found += get_pid_of_process(argv[i++]));
 
 	(void)printf("\n");
 	
-	return 0;
+	return (procs_found > 0) ? 0 : 1;
 }
