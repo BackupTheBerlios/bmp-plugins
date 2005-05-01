@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: pidof.c,v 1.3 2005/05/01 11:11:46 bogorodskiy Exp $
+ * $Id: pidof.c,v 1.4 2005/05/01 16:26:19 bogorodskiy Exp $
  */
 
 #include <stdio.h>
@@ -33,9 +33,13 @@
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/user.h>
+#include <sys/param.h>
 #include <fcntl.h>
+#include <stdlib.h>
+#include <sysexits.h>
 
 static int	get_pid_of_process(char *process_name);
+static void	usage(void);
 
 static int
 get_pid_of_process(char *process_name)
@@ -44,6 +48,8 @@ get_pid_of_process(char *process_name)
 	struct kinfo_proc *p;
 	int i, n_processes, processes_found;
 
+	processes_found = 0;
+	
 	if ((kd = kvm_open("/dev/null", "/dev/null", "/dev/null", O_RDONLY, "kvm_open")) == NULL) 
 			 (void)errx(1, "%s", kvm_geterr(kd));
 	else {
@@ -60,13 +66,24 @@ get_pid_of_process(char *process_name)
 	return processes_found;
 }
 
+static void
+usage() 
+{
+
+	(void)fprintf(stderr, "usage: pidof name1 name2 ...\n");
+	exit(EX_USAGE);
+}
+
 int
 main(int argc, char **argv)
 {
 	int i, procs_found;
 
 	procs_found = 0;
-	
+
+	if (argc <= 1)
+		usage();
+
 	for (i = 1; i<argc; procs_found += get_pid_of_process(argv[i++]));
 
 	(void)printf("\n");
