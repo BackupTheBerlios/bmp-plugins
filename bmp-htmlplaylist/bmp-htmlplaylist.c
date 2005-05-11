@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $Id: bmp-htmlplaylist.c,v 1.10 2005/03/02 19:23:39 bogorodskiy Exp $
+ * $Id: bmp-htmlplaylist.c,v 1.11 2005/05/11 11:18:18 bogorodskiy Exp $
  */
 
 #include <stdio.h>
@@ -29,7 +29,7 @@
 
 #include <bmp/beepctrl.h>
 
-#define HOMEPAGE "http://bmp-plugins.berlios.de/misc/bmp-htmlplaylist/"
+#define HOMEPAGE "http://bmp-plugins.berlios.de/novelian/project.php?p=bmp-htmlplaylist"
 
 short int xml_output;
 static void html_header(void);
@@ -42,7 +42,7 @@ static void help(void);
 static void version()
 {
 	
-	(void)printf("bmp-htmlplaylist %s (c) 2004 Roman Bogorodskiy\n%s\n\n", 
+	(void)printf("bmp-htmlplaylist %s (c) 2004-2005 Roman Bogorodskiy\n%s\n\n", 
 		     VERSION, COMPILEINFO);
 	exit(0);
 }
